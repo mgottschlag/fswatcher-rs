@@ -1,3 +1,4 @@
+use std::ffi::{OsStr, OsString};
 use std::pin::Pin;
 use std::task::{Context, Poll};
 
@@ -14,7 +15,7 @@ pub struct FileSystemWatcher {
 }
 
 impl FileSystemWatcher {
-    pub async fn new(path: &str) -> Result<FileSystemWatcher, Error> {
+    pub async fn new(path: &OsStr) -> Result<FileSystemWatcher, Error> {
         #[cfg(target_os = "linux")]
         let watcher = Box::pin(FileSystemWatcherInotify::new(path).await?);
 
@@ -38,18 +39,18 @@ impl Stream for FileSystemWatcher {
 
 pub enum FileSystemEvent {
     Stopped(StopReason),
-    DirectoryWatched(String),
+    DirectoryWatched(OsString),
     /// A directory was created. Note that the directory does not need to be
     /// empty - the caller has to check for existing file contents. Existing
     /// subdirectories are automatically monitored for changes.
-    DirectoryCreated(String),
-    DirectoryChanged(String),
-    DirectoryRemoved(String),
-    DirectoryMoved(String, String),
-    FileCreated(String),
-    FileChanged(String),
-    FileRemoved(String),
-    FileMoved(String, String),
+    DirectoryCreated(OsString),
+    DirectoryChanged(OsString),
+    DirectoryRemoved(OsString),
+    DirectoryMoved(OsString, OsString),
+    FileCreated(OsString),
+    FileChanged(OsString),
+    FileRemoved(OsString),
+    FileMoved(OsString, OsString),
     Error(Error),
 }
 
