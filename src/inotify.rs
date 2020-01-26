@@ -20,11 +20,9 @@ pub struct FileSystemWatcherInotify {
 
 impl FileSystemWatcherInotify {
     pub async fn new(path: &OsStr) -> Result<FileSystemWatcherInotify, super::Error> {
-        // TODO: Better error handling.
-        let mut inotify = Inotify::init().expect("Failed to initialize inotify");
+        let mut inotify = Inotify::init()?;
         let stream = inotify
-            .event_stream(InotifyBuffer { data: [0; 1024] })
-            .unwrap();
+            .event_stream(InotifyBuffer { data: [0; 1024] })?;
 
         Ok(FileSystemWatcherInotify {
             inotify,
