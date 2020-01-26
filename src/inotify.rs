@@ -19,10 +19,9 @@ pub struct FileSystemWatcherInotify {
 }
 
 impl FileSystemWatcherInotify {
-    pub async fn new(path: &OsStr) -> Result<FileSystemWatcherInotify, super::Error> {
+    pub fn new(path: &OsStr) -> Result<FileSystemWatcherInotify, super::Error> {
         let mut inotify = Inotify::init()?;
-        let stream = inotify
-            .event_stream(InotifyBuffer { data: [0; 1024] })?;
+        let stream = inotify.event_stream(InotifyBuffer { data: [0; 1024] })?;
 
         Ok(FileSystemWatcherInotify {
             inotify,

@@ -15,9 +15,9 @@ pub struct FileSystemWatcher {
 }
 
 impl FileSystemWatcher {
-    pub async fn new(path: &OsStr) -> Result<FileSystemWatcher, Error> {
+    pub fn new(path: &OsStr) -> Result<FileSystemWatcher, Error> {
         #[cfg(target_os = "linux")]
-        let watcher = Box::pin(FileSystemWatcherInotify::new(path).await?);
+        let watcher = Box::pin(FileSystemWatcherInotify::new(path)?);
 
         #[cfg(not(target_os = "linux"))]
         panic!("Not yet implemented.");
@@ -37,6 +37,7 @@ impl Stream for FileSystemWatcher {
     }
 }
 
+#[derive(Debug)]
 pub enum FileSystemEvent {
     Stopped(StopReason),
     DirectoryWatched(OsString),
@@ -54,6 +55,7 @@ pub enum FileSystemEvent {
     Error(Error),
 }
 
+#[derive(Debug)]
 pub enum StopReason {
     DirectoryRemoved,
 }
