@@ -22,4 +22,3 @@ async fn main() {
         println!("Event: {:?}", event);
     }
 }
-

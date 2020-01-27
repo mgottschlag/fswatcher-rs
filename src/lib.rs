@@ -45,11 +45,11 @@ pub enum FileSystemEvent {
     /// empty - the caller has to check for existing file contents. Existing
     /// subdirectories are automatically monitored for changes.
     DirectoryCreated(OsString),
-    DirectoryChanged(OsString),
+    DirectoryModified(OsString),
     DirectoryRemoved(OsString),
     DirectoryMoved(OsString, OsString),
     FileCreated(OsString),
-    FileChanged(OsString),
+    FileModified(OsString),
     FileRemoved(OsString),
     FileMoved(OsString, OsString),
     Error(Error),
