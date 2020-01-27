@@ -12,5 +12,5 @@ API. Currently, only Linux and inotify are supported.
 
 ## License
 
-fswatcher-rs is licensed under the 2-clause BSD license. For more information,
-see [LICENSE.md](LICENSE.md).
+fswatcher-rs is licensed under the ISC license. For more information, see
+[LICENSE.md](LICENSE.md).
