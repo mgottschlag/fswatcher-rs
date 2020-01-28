@@ -6,8 +6,11 @@ use futures::stream::Stream;
 
 #[cfg(target_os = "linux")]
 use crate::inotify::FileSystemWatcherInotify;
+mod file_event_delay;
 #[cfg(target_os = "linux")]
 mod inotify;
+
+pub use file_event_delay::FileEventDelay;
 
 pub struct FileSystemWatcher {
     #[cfg(target_os = "linux")]

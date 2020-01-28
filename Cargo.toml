@@ -10,7 +10,7 @@ edition = "2018"
 inotify = "0.8"
 futures = "0.3.1"
 futures-tokio-compat = { git = "https://github.com/mgottschlag/futures-tokio-compat.git" }
-tokio = { version = "0.2.10", features = ["rt-core", "sync"] }
+tokio = { version = "0.2.10", features = ["rt-core", "stream", "sync", "time"] }
 
 [dev-dependencies]
 tokio = { version = "0.2.10", features = ["macros"] }
