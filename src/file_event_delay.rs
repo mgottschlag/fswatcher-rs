@@ -55,7 +55,10 @@ where
     }
 
     fn process_events(&mut self) {
-        // TODO
+        // TODO: Actually process and combine the events.
+        for event in self.event_queue.1.drain(..) {
+            self.processed_events.push_back(event);
+        }
 
         // Swap the arrays. This code assumes that the second array is now empty.
         // TODO: Check the assumption.
