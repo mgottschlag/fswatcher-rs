@@ -1,5 +1,4 @@
 use std::collections::VecDeque;
-use std::io;
 use std::mem;
 use std::pin::Pin;
 use std::task::{Context, Poll};
@@ -24,7 +23,7 @@ use super::FileSystemEvent;
 ///   to the user of the library.
 pub struct FileEventDelay<T>
 where
-    T: Stream<Item = io::Result<FileSystemEvent>>,
+    T: Stream<Item = FileSystemEvent>,
 {
     input: Pin<Box<T>>,
 
@@ -42,7 +41,7 @@ where
 
 impl<T> FileEventDelay<T>
 where
-    T: Stream<Item = io::Result<FileSystemEvent>>,
+    T: Stream<Item = FileSystemEvent>,
 {
     pub fn new(input: T, min_delay: Duration) -> Self {
         Self {
@@ -68,7 +67,7 @@ where
 
 impl<T> Stream for FileEventDelay<T>
 where
-    T: Stream<Item = io::Result<FileSystemEvent>>,
+    T: Stream<Item = FileSystemEvent>,
 {
     type Item = FileSystemEvent;
 
@@ -80,7 +79,7 @@ where
             // Fill the first array with incoming inotify events.
             while let Poll::Ready(inotify_event) = Pin::as_mut(&mut self_.input).poll_next(cx) {
                 if inotify_event.is_some() {
-                    self_.event_queue.0.push(inotify_event.unwrap().unwrap());
+                    self_.event_queue.0.push(inotify_event.unwrap());
                 } else {
                     // TODO: Stream exhausted. Can this ever happen?
                     return Poll::Ready(None);
